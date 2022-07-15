@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import dj_database_url
 from pathlib import Path
-from turtle import update
 from decouple import config
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
