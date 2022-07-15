@@ -13,7 +13,7 @@
     <nav class="flex-div">
         <div class="nav-left flex-div">
             <img src="{% static 'homepage/images/menu.png' %}" class="menu-icon">
-            <img src="{% static 'homepage/images/mytube-logo.jpg' %}" class="logo">
+            <a href="{% url 'homepage' %}"><img src="{% static 'homepage/images/mytube-logo.jpg' %}" class="logo"></a>
         </div>
         <div class="nav-middle flex-div">
 
@@ -28,7 +28,7 @@
             <img src="{% static 'homepage/images/more.png' %}">
             <img src="{% static 'homepage/images/notification.png' %}">
             <div>
-                <a href=""><img src="{% static 'homepage/images/' %}"><p>SIGN IN</p></a>
+                <a href="{% url 'login' %}"><img src="{% static 'homepage/images/' %}"><p>SIGN IN</p></a>
             </div>
         </div>
     </nav>
@@ -48,7 +48,7 @@
             <hr>
             <div><p>Sign in to like videos, comment and subscribe.</p></div>
             <div>
-                <a href=""><img src="{% static 'homepage/images/' %}"><p>SIGN IN</p></a>
+                <a href="{% url 'login' %}"><img src="{% static 'homepage/images/' %}"><p>SIGN IN</p></a>
             </div>
         </div>
     </div>
