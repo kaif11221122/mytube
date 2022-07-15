@@ -27,8 +27,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['mytube0.herokuapp.com']
+ALLOWED_HOSTS = ['mytube0.herokuapp.com', 'locahost', '127.0.0.1']
 
 # Application definition
 
