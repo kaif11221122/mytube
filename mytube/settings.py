@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 from turtle import update
 from decouple import config
@@ -27,8 +28,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['mytube0.herokuapp.com', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = ['mytube0.herokuapp.com', 'localhost', '127.0.0.1]
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mytube0.herokuapp.com']
 
 # Application definition
 
@@ -87,7 +88,6 @@ DATABASES = {
     }
 }
 
-import dj_database_url
 db_from_env = dj_database.url.config(conn_max_age=600)
 DATABASES('default').update(db_from_env)
 
