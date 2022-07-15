@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'mytube.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mytube_data',
         'USER': 'mytube_admin',
         'PASSWORD': 'admin',
