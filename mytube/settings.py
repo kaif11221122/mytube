@@ -14,6 +14,9 @@ import dj_database_url
 from pathlib import Path
 from decouple import config
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -89,9 +92,17 @@ DATABASES = {
     }
 }
 
+cloudinary.config(
+    cloud_name="mytube0",
+    api_key="676265773695116",
+    api_secret="pM0Ozqgf7XY6NPCw5qr7hncKReI",
+    secure=True
+)
+
 db_from_env = dj_database_url.config(conn_max_age=600)
 
 DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

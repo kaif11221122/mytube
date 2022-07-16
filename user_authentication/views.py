@@ -17,7 +17,6 @@ def register(request):
                 username=User.objects.get(username=request.POST["username"]),
                 profile_image=request.FILES['profile_image'],
             )
-            print('\n\n\n', request.FILES['profile_image'], '\n\n\n')
             instance_user_data.save()
             return redirect('login')
     else:
