@@ -93,9 +93,9 @@ DATABASES = {
 }
 
 cloudinary.config(
-    cloud_name="mytube0",
-    api_key="676265773695116",
-    api_secret="pM0Ozqgf7XY6NPCw5qr7hncKReI",
+    cloud_name=config("cloud_name"),
+    api_key=config("api_key"),
+    api_secret=config("api_secret"),
     secure=True
 )
 
