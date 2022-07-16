@@ -10,13 +10,13 @@ from django.contrib.auth.models import User
 
 def register(request):
     if request.user.id is None:
-        print('ok')
         if request.method == "POST":
             form = RegisterUserForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
                 instance_user_data = user_data(
-                    username=User.objects.get(username=request.POST["username"]),
+                    username=User.objects.get(
+                        username=request.POST["username"]),
                     profile_image=request.FILES['profile_image'],
                 )
                 instance_user_data.save()

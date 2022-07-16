@@ -1,12 +1,21 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from user_authentication.models import user_data
+from channel.models import video
 # Create your views here.
 
 
 def homepage(request):
+    videos_data = video.objects.all().values()
     if request.user.is_authenticated and not request.user.is_superuser:
         image = user_data.objects.filter(username_id=request.user.id)[0]
-        return render(request, 'homepage/loggedin.html', {'image':image})
+        context = {
+            'image': image,
+            'videos_data': videos_data
+        }
+        return render(request, 'homepage/loggedin.html', context)
     else:
-        return render(request, 'homepage/non_loggedin.html')
+        context = {
+            'videos_data': videos_data
+        }
+        return render(request, 'homepage/non_loggedin.html', context)

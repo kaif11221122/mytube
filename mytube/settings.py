@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'user_authentication',
     'homepage',
+    'channel',
 ]
 
 MIDDLEWARE = [

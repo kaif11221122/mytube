@@ -1,6 +1,7 @@
 {% load static %}
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +9,9 @@
     <title>mytube</title>
     <link rel="stylesheet" href="{% static 'homepage/style.css' %}">
 </head>
+
 <body>
-    
+
     <nav class="flex-div">
         <div class="nav-left flex-div">
             <img src="{% static 'homepage/images/menu.png' %}" class="menu-icon">
@@ -36,22 +38,44 @@
 
     <div class="sidebar">
         <div class="shortcut-links">
-            <a href=""><img src="{% static 'homepage/images/home.png' %}"><p>Home</p></a>
-            <a href=""><img src="{% static 'homepage/images/explore.png' %}"><p>Explore</p></a>
-            <a href=""><img src="{% static 'homepage/images/youtube-shorts.png' %}"><p>Shorts</p></a>
-            <a href=""><img src="{% static 'homepage/images/subscription.png' %}"><p>Subscriptions</p></a>
+            <a href=""><img src="{% static 'homepage/images/home.png' %}">
+                <p>Home</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/explore.png' %}">
+                <p>Explore</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/youtube-shorts.png' %}">
+                <p>Shorts</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/subscription.png' %}">
+                <p>Subscriptions</p>
+            </a>
             <hr>
-            <a href=""><img src="{% static 'homepage/images/library.png' %}"><p>Library</p></a>
-            <a href=""><img src="{% static 'homepage/images/history.png' %}"><p>History</p></a>
-            <a href=""><img src="{% static 'homepage/images/' %}"><p>Your videos</p></a>
-            <a href=""><img src="{% static 'homepage/images/' %}"><p>Watch later</p></a>
-            <a href=""><img src="{% static 'homepage/images/' %}"><p>Liked videos</p></a>
-            <a href=""><img src="{% static 'homepage/images/show-more.png' %}"><p>Show more</p></a>
+            <a href=""><img src="{% static 'homepage/images/library.png' %}">
+                <p>Library</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/history.png' %}">
+                <p>History</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Your videos</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Watch later</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Liked videos</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/show-more.png' %}">
+                <p>Show more</p>
+            </a>
             <hr>
         </div>
         <div class="subscribed-list">
             <h3>SUBSCRIBED</h3>
-            <a href=""><img src="{% static 'homepage/images/' %}"><p>Testing Channel Name</p></a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Testing Channel Name</p>
+            </a>
         </div>
     </div>
 
@@ -62,20 +86,23 @@
             <img src="{% static 'homepage/images/banner.jpeg' %}">
         </div>
         <div class="list-container">
+            {% for video in videos_data %}
             <div class="vid-list">
-                <a href=""><img src="{% static 'homepage/images/thumbnail1.png' %}" class="thumbnail"></a>                
+                <a href=""><img src="{{video.thumbnail.url }}" class="thumbnail"></a>
                 <div class="flex-div">
                     <img src="{% static 'homepage/images/' %}">
                     <div class="vid-info">
-                        <a href="">Best channel to learn coding</a>
-                        <p>Mountblue Tutorials</p>
-                        <p>15k views &bull; 2 days</p>
+                        <a href="">"{{ video.title }}"</a>
+                        <p>{{ video.channel }}</p>
+                        <p>{{ video.video_views }} views &bull; 2 days</p>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 
-<!-- <script src="script.js"></script> -->
+    <!-- <script src="script.js"></script> -->
 </body>
+
 </html>

@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user_authentication.urls')),
     path('', include('homepage.urls'), name='home'),
+    path('', include('channel.urls'), name='channel'),
 ]
 
 if settings.DEBUG:
