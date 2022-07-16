@@ -1,21 +1,27 @@
-from crypt import methods
-from pyexpat.errors import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login as auth_login, logout
+from .models import user_data
+from .forms import RegisterUserForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegisterUserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            instance_user_data = user_data(
+                username=User.objects.get(username=request.POST["username"]),
+                profile_image=request.FILES['profile_image'],
+            )
+            print('\n\n\n', request.FILES['profile_image'], '\n\n\n')
+            instance_user_data.save()
             return redirect('login')
     else:
-        form = UserCreationForm()
+        form = RegisterUserForm()
     return render(request, 'user_authentication/registeration.html', {'form': form})
 
 
@@ -28,7 +34,6 @@ def login(request):
             user = authenticate(username=user_name, password=user_password)
             if user is not None:
                 auth_login(request, user)
-                messages.success(request, 'Logged in success !!!')
                 return redirect('homepage')
             else:
                 return HttpResponse('unable to authenticate !!!!!')
