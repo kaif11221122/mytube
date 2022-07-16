@@ -1,7 +1,21 @@
-<form class="site-form" method="post" enctype="multipart/form-data">
-    {{ form.as_p }}
-    {% csrf_token %}
-    
-    <input type="submit" value="REGISTER">
-    
-</form>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'user_authentication/style.css' %}">
+</head>
+<body>
+    <form class="site-form" method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        
+        <a href="/login"><input type="button" value="LOGIN"></a>
+        <input type="submit" value="REGISTER">
+        
+    </form>
+</body>
+</html>
