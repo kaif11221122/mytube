@@ -77,6 +77,9 @@ nav{
     width: 20px;
     margin-right: 20px;
 }
+#youtube-shorts{
+    width: 15px;   
+}
 .shortcut-links a{
     display: flex;
     align-items: center;
@@ -146,7 +149,7 @@ nav{
 }
 .list-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-column-gap: 16px;
     grid-row-gap: 30px;
     margin-top: 15px;

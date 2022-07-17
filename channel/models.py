@@ -1,11 +1,11 @@
 from django.db import models
-from django.forms import CharField, IntegerField
 from cloudinary.models import CloudinaryField
 # Create your models here.
 
-
-class video(models.Model):
-    thumbnail = CloudinaryField('Image')
-    title = models.CharField(max_length=50)
-    channel = models.CharField(max_length=20)
+class video_info(models.Model):
+    thumbnail = CloudinaryField('Thumbnail')
+    video_link = CloudinaryField('Video',resource_type="video")
+    title = models.CharField(max_length=100)
+    description = models.TextField(max_length=200)
+    channel_id = models.CharField(max_length=40)
     video_views = models.IntegerField(null=True, default=0)

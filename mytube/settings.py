@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user_authentication',
     'homepage',
     'channel',
+    'watch',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ WSGI_APPLICATION = 'mytube.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mytube_data',
+        'NAME': 'mytube1',
         'USER': 'mytube_admin',
         'PASSWORD': 'admin',
         'HOST': '127.0.0.1',

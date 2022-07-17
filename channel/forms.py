@@ -1,9 +1,7 @@
-from dataclasses import field
 from django.forms import ModelForm
-from .models import video
-
+from .models import video_info
 
 class video_creation_form(ModelForm):
     class Meta:
-        model = video
+        model = video_info
         fields = '__all__'
