@@ -6,7 +6,6 @@ from channel.models import video_info
 
 
 def homepage(request):
-    print(id)
     videos_data = video_info.objects.all().values()
     if request.user.is_authenticated and not request.user.is_superuser:
 

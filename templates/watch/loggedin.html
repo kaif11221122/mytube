@@ -1,0 +1,159 @@
+{% load static%}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Title</title>
+    <link rel="stylesheet" href="{% static 'watch/style.css' %}">
+</head>
+
+<body>
+    <nav class="flex-div">
+        <div class="nav-left flex-div">
+            <img src="{% static 'homepage/images/menu.png' %}" class="menu-icon">
+            <a href="{% url 'homepage' %}"><img src="{% static 'homepage/images/mytube-logo.jpg' %}" class="logo"></a>
+        </div>
+        <div class="nav-middle flex-div">
+
+            <div class="search-box flex-div">
+                <input type="text" placeholder="Search">
+                <img src="{% static 'homepage/images/search.png' %}">
+            </div>
+            <img src="{% static 'homepage/images/voice-search.png' %}" class="mic-icon">
+        </div>
+        <div class="nav-right flex-div">
+            <img src="{% static 'homepage/images/upload.png' %}">
+            <img src="{% static 'homepage/images/more.png' %}">
+            <img src="{% static 'homepage/images/notification.png' %}">
+            <img src="{{ image.profile_image.url }}" class="user-icon">
+        </div>
+    </nav>
+
+    <!-- ----------------sidebar------------------ -->
+
+    <div class="sidebar">
+        <div class="shortcut-links">
+            <a href=""><img src="{% static 'homepage/images/home.png' %}">
+                <p>Home</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/explore.png' %}">
+                <p>Explore</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/youtube-shorts.png' %}">
+                <p>Shorts</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/subscription.png' %}">
+                <p>Subscriptions</p>
+            </a>
+            <hr>
+            <a href=""><img src="{% static 'homepage/images/library.png' %}">
+                <p>Library</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/history.png' %}">
+                <p>History</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Your videos</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Watch later</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Liked videos</p>
+            </a>
+            <a href=""><img src="{% static 'homepage/images/show-more.png' %}">
+                <p>Show more</p>
+            </a>
+            <hr>
+        </div>
+        <div class="subscribed-list">
+            <h3>SUBSCRIBED</h3>
+            <a href=""><img src="{% static 'homepage/images/' %}">
+                <p>Testing Channel Name</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="play-container">
+        <div class="row">
+            <div class="play-video">
+                <video controls autoplay>
+                    <source src="{{ video_data.video_link.url }}" type="video/mp4">
+                </video>
+
+                <div class="tags">
+                    <a href="">#Coding</a>
+                    <a href="">#JavaScript</a>
+                    <a href="">#Python</a>
+                    <a href="">#Django</a>
+                </div>
+                <h3>{{ video_data.title }}</h3>
+
+                <div class="play-video-info">
+                    <p>{{ video_data.video_views }} Views &bull; 2 days ago</p>
+                    <div>
+                        <a href=""><img src="{% static 'homepage/images/like.png' %}" alt="">125</a>
+                        <a href=""><img src="{% static 'homepage/images/dislike.png' %}" alt="">2</a>
+                        <a href=""><img src="{% static 'homepage/images/share.png' %}" alt="">Share</a>
+                        <a href=""><img src="{% static 'homepage/images/save.png' %}" alt="">Save</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="publisher">
+                    <img src="{% static 'homepage/images/Jack.png' %}"">
+                    <div>
+                        <p>England & Wales Cricket Board</p>
+                        <span>5000k Subscribers</span>
+                    </div>
+                    <button type="button">Subscribe</button>
+                </div>
+                <div class="vid-description">
+                    <p>{{ video_data.description }}</p>
+                    <hr>
+                    <h4>134 Comments</h4>
+                    <div class="add-comment">
+                        <img src="{% static 'homepage/images/Jack.png' %}">
+                        <input type="text" placeholder="Add a comment...">
+                    </div>
+                    <div class="old-comment">
+                        <img src="{% static 'homepage/images/Jack.png' %}">
+                        <div>
+                            <h3>Jack Nicholson <span>2 days ago</span></h3>
+                            <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation they are feeling for this loss</p>
+                            <div class="comment-action">
+                                <img src="{% static 'homepage/images/like.png' %}">
+                                <span>20</span>
+                                <img src="{% static 'homepage/images/dislike.png' %}">
+                                <span>2</span>
+                                <span>REPLY</span>
+                                <a href="">View replies</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="right-sidebar">
+                {% for data in all_videos_data%}
+                    <div class="side-video-list">
+                        <a href="{% url 'watch:watch' data.id%}" class="small-thumbnail"><img src="{{ data.thumbnail.url }}" ></a>
+                        <div class="vid-info">
+                            <a href="">{{ data.title }}</a>
+                            <p>Easy Tutorials</p>
+                            <p>{{ data.video_views}} Views</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'watch/script.js' %}"></script>
+
+</body>
+
+</html>

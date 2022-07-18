@@ -28,7 +28,11 @@
             <img src="{% static 'homepage/images/upload.png' %}">
             <img src="{% static 'homepage/images/more.png' %}">
             <img src="{% static 'homepage/images/notification.png' %}">
-            <img src="{{ image.profile_image.url }}" class="user-icon">
+            <div>
+                <a href="{% url 'login' %}"><img src="{% static 'homepage/images/' %}">
+                    <p>SIGN IN</p>
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -36,7 +40,7 @@
 
     <div class="sidebar">
         <div class="shortcut-links">
-            <a href="{% url 'homepage' %}"><img src="{% static 'homepage/images/home.png' %}">
+            <a href=""><img src="{% static 'homepage/images/home.png' %}">
                 <p>Home</p>
             </a>
             <a href=""><img src="{% static 'homepage/images/explore.png' %}">
@@ -45,14 +49,14 @@
             <a href=""><img src="{% static 'homepage/images/youtube-shorts.png' %}">
                 <p>Shorts</p>
             </a>
-            <a href=""><img src="{% static 'homepage/images/subscription.png' %}">
+            <a href="{% url 'login' %}"><img src="{% static 'homepage/images/subscription.png' %}">
                 <p>Subscriptions</p>
             </a>
             <hr>
-            <a href=""><img src="{% static 'homepage/images/library.png' %}">
+            <a href="{% url 'login' %}"><img src="{% static 'homepage/images/library.png' %}">
                 <p>Library</p>
             </a>
-            <a href=""><img src="{% static 'homepage/images/history.png' %}">
+            <a href="{% url 'login' %}"><img src="{% static 'homepage/images/history.png' %}">
                 <p>History</p>
             </a>
             <hr>

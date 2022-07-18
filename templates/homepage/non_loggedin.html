@@ -51,14 +51,14 @@
             <a href=""><img src="{% static 'homepage/images/youtube-shorts.png' %}">
                 <p>Shorts</p>
             </a>
-            <a href=""><img src="{% static 'homepage/images/subscription.png' %}">
+            <a href="{% url 'login' %}"><img src="{% static 'homepage/images/subscription.png' %}">
                 <p>Subscriptions</p>
             </a>
             <hr>
-            <a href=""><img src="{% static 'homepage/images/library.png' %}">
+            <a href="{% url 'login' %}"><img src="{% static 'homepage/images/library.png' %}">
                 <p>Library</p>
             </a>
-            <a href=""><img src="{% static 'homepage/images/history.png' %}">
+            <a href="{% url 'login' %}"><img src="{% static 'homepage/images/history.png' %}">
                 <p>History</p>
             </a>
             <hr>

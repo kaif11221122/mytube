@@ -332,6 +332,9 @@ nav{
     .logo{
         width: 90px;
     }
+    .sidebar{
+        display: none;
+    }
     .play-video{
         flex-basis: 100%;
     }
