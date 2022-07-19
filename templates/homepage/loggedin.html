@@ -26,7 +26,7 @@
             <img src="{% static 'homepage/images/voice-search.png' %}" class="mic-icon">
         </div>
         <div class="nav-right flex-div">
-            <img src="{% static 'homepage/images/upload.png' %}">
+            <a href="{% url "channel" %}"><img src="{% static 'homepage/images/upload.png' %}"></a>
             <img src="{% static 'homepage/images/more.png' %}">
             <img src="{% static 'homepage/images/notification.png' %}">
             <img src="{{ image.profile_image.url }}" class="user-icon">

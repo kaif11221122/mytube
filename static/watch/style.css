@@ -176,6 +176,11 @@ nav{
 .side-video-list .vid-info{
     flex-basis: 49%;
 }
+
+.small-side-bar-info{
+    display: none;
+}
+
 .play-video .tags{
     margin-top: 10px;
 }

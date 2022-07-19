@@ -26,7 +26,7 @@
             <img src="{% static 'homepage/images/voice-search.png' %}" class="mic-icon">
         </div>
         <div class="nav-right flex-div">
-            <img src="{% static 'homepage/images/upload.png' %}">
+            <a href="{% url 'channel' %}"><img src="{% static 'homepage/images/upload.png' %}"></a>
             <img src="{% static 'homepage/images/more.png' %}">
             <img src="{% static 'homepage/images/notification.png' %}">
             <div>
@@ -62,7 +62,7 @@
                 <p>History</p>
             </a>
             <hr>
-            <div>
+            <div class="side-bar-info">
                 <p>Sign in to like videos, comment and subscribe.</p>
             </div>
             <div>

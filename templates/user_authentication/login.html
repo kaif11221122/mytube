@@ -1,19 +1,32 @@
 {% load static %}
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'user_authentication/style.css' %}">
 </head>
+
 <body>
-    <form class="site-form" method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <input type="submit" value="LOGIN">
-        <a href="{% url 'register' %}"><input type="button" value="REGISTER"></a>
-    </form>    
+    <div class="container">
+        <div class="img-div">
+            <a href="{% url 'homepage' %}"><img src="{% static 'homepage/images/mytube-logo.jpg' %}" class="logo"></a></a>
+        </div>
+        <div>
+            <form class="site-form form-control d-flex justify-content-center" method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <a><input type="submit" value="LOGIN"></a>
+                <a href="{% url 'register' %}"><input type="button" value="REGISTER"></a>
+            </form>
+        </div>
+        
+    </div>
+
 </body>
+
 </html>

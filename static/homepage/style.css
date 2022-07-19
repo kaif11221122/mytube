@@ -127,6 +127,9 @@ nav{
     width: 50%;
     margin-bottom: 25px;
 }
+.small-side-bar-info{
+    display: none;
+}
 
 /* ---------------main-------------- */
 
@@ -138,7 +141,7 @@ nav{
     padding-bottom: 20px;
 }
 .large-container{
-    padding-left: 2%;
+    padding-left: 5%;
 }
 .banner{
     width: 100%;

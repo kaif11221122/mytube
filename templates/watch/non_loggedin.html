@@ -60,7 +60,7 @@
                 <p>History</p>
             </a>
             <hr>
-            <div>
+            <div class="side-bar-info">
                 <p>Sign in to like videos, comment and subscribe.</p>
             </div>
             <div>
@@ -102,7 +102,7 @@
                         <p>England & Wales Cricket Board</p>
                         <span>5000k Subscribers</span>
                     </div>
-                    <button type="button">Subscribe</button>
+                    <button type=" button">Subscribe</button>
                 </div>
                 <div class="vid-description">
                     <p>{{ video_data.description }}</p>
@@ -116,7 +116,8 @@
                         <img src="{% static 'homepage/images/Jack.png' %}">
                         <div>
                             <h3>Jack Nicholson <span>2 days ago</span></h3>
-                            <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation they are feeling for this loss</p>
+                            <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation
+                                they are feeling for this loss</p>
                             <div class="comment-action">
                                 <img src="{% static 'homepage/images/like.png' %}">
                                 <span>20</span>
@@ -133,14 +134,15 @@
             </div>
             <div class="right-sidebar">
                 {% for data in all_videos_data%}
-                    <div class="side-video-list">
-                        <a href="{% url 'watch:watch' data.id%}" class="small-thumbnail"><img src="{{ data.thumbnail.url }}" ></a>
-                        <div class="vid-info">
-                            <a href="">{{ data.title }}</a>
-                            <p>Easy Tutorials</p>
-                            <p>{{ data.video_views}} Views</p>
-                        </div>
+                <div class="side-video-list">
+                    <a href="{% url 'watch:watch' data.id%}" class="small-thumbnail"><img
+                            src="{{ data.thumbnail.url }}"></a>
+                    <div class="vid-info">
+                        <a href="">{{ data.title }}</a>
+                        <p>Easy Tutorials</p>
+                        <p>{{ data.video_views}} Views</p>
                     </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
