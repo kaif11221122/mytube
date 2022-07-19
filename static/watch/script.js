@@ -1,6 +1,6 @@
 var menu_icon = document.querySelector(".menu-icon");
 var side_bar = document.querySelector(".sidebar");
-var container = document.querySelector(".container");
+var container = document.querySelector(".play-container");
 var side_bar_info = document.querySelector(".side-bar-info");
 
 
