@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Title</title>
     <link rel="stylesheet" href="{% static 'watch/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -72,7 +73,7 @@
         <div class="subscribed-list">
             <h3>SUBSCRIBED</h3>
             <a href=""><img src="{% static 'homepage/images/' %}">
-                <p>Testing Channel Name</p>
+                <p>Testing Channel Name "{{ video_data.id }}"</p>
             </a>
         </div>
     </div>
@@ -95,8 +96,62 @@
                 <div class="play-video-info">
                     <p>{{ video_data.video_views }} Views &bull; 0 days ago</p>
                     <div>
-                        <a href=""><img src="{% static 'homepage/images/like.png' %}" alt="">0</a>
-                        <a href=""><img src="{% static 'homepage/images/dislike.png' %}" alt="">0</a>
+
+
+                        <button id="like-btn" class="dl-btn">
+                            <a><img src="{% static 'watch/images/black-like.png' %}"></a>
+                            <a id="like-count">{{ likes_count }}</a>
+                        </button>
+
+                        <button id="dislike-btn" class="dl-btn">
+                            <a><img src="{% static 'watch/images/black-dislike.png' %}"></a>
+                            <a id="dislike-count">{{ dislikes_count }}</a>
+                        </button>
+
+                        <script>
+                            $('#like-btn').click(function () {
+                                var dislikes_count;
+                                likes_count = document.getElementById('like-count').innerText;
+                                dislikes_count = document.getElementById('dislike-count').innerText;
+                                $.ajax(
+                                    {
+                                        type: "GET",
+                                        url: "{% url 'like' %}",
+                                        data: {
+                                            likes_count: likes_count,
+                                            dislikes_count: dislikes_count,
+                                            video_id: "{{ video_data.id }}",
+                                        },
+                                        success: function (data) {
+                                            document.getElementById('like-count').innerText = data.likes_count;
+                                            document.getElementById('dislike-count').innerText = data.dislikes_count;
+                                        }
+                                    }
+                                )
+                            });
+                            $('#dislike-btn').click(function () {
+                                var dislikes_count;
+                                likes_count = document.getElementById('like-count').innerText;
+                                dislikes_count = document.getElementById('dislike-count').innerText;
+                                $.ajax(
+                                    {
+                                        type: "GET",
+                                        url: "{% url 'dislike' %}",
+                                        data: {
+                                            likes_count: likes_count,
+                                            dislikes_count: dislikes_count,
+                                            video_id: "{{ video_data.id }}",
+                                        },
+                                        success: function (data) {
+                                            document.getElementById('like-count').innerText = data.likes_count;
+                                            document.getElementById('dislike-count').innerText = data.dislikes_count;
+                                        }
+                                    }
+                                )
+                            });
+                        </script>
+
+
                         <a href=""><img src="{% static 'homepage/images/share.png' %}" alt="">Share</a>
                         <a href=""><img src="{% static 'homepage/images/save.png' %}" alt="">Save</a>
                     </div>
@@ -108,7 +163,7 @@
                         <p>Pending Channel</p>
                         <span>0 Subscribers</span>
                     </div>
-                    <button type="button">Subscribe</button>
+                    <button type=" button">Subscribe</button>
                 </div>
                 <div class="vid-description">
                     <p>{{ video_data.description }}</p>
@@ -122,7 +177,8 @@
                         <img src="{% static 'homepage/images/Jack.png' %}">
                         <div>
                             <h3>Jack Nicholson <span>0 days ago</span></h3>
-                            <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation they are feeling for this loss</p>
+                            <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation
+                                they are feeling for this loss</p>
                             <div class="comment-action">
                                 <img src="{% static 'homepage/images/like.png' %}">
                                 <span>0</span>
@@ -133,20 +189,20 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
             <div class="right-sidebar">
                 {% for data in all_videos_data%}
-                    <div class="side-video-list">
-                        <a href="{% url 'watch:watch' data.id%}" class="small-thumbnail"><img src="{{ data.thumbnail.url }}" ></a>
-                        <div class="vid-info">
-                            <a href="">{{ data.title }}</a>
-                            <p>Easy Tutorials</p>
-                            <p>{{ data.video_views}} Views</p>
-                        </div>
+                <div class="side-video-list">
+                    <a href="{% url 'watch:watch' data.id%}" class="small-thumbnail"><img
+                            src="{{ data.thumbnail.url }}"></a>
+                    <div class="vid-info">
+                        <a href="">{{ data.title }}</a>
+                        <p>Easy Tutorials</p>
+                        <p>{{ data.video_views}} Views</p>
                     </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
