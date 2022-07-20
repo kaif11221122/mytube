@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import video_creation_form
 from django.http import JsonResponse
