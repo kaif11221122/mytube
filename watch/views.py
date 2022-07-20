@@ -1,13 +1,17 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 from user_authentication.models import user_data
 from channel.models import video_info
 from django.db.models import F
-from watch.models import likes, dislikes
+from watch.models import likes, dislikes, comments
 # Create your views here.
 
 
 def watch(request, id):
+
+    # video_comments = comments.objects.filter(video_id=id)
+    # print(video_comments)
+    # for i in video_comments:
+    #     print(i.)
 
     all_videos_data = video_info.objects.all().exclude(id=id)
     video_data = video_info.objects.filter(id=id)
@@ -18,8 +22,8 @@ def watch(request, id):
         video_id=video_id).distinct('user_id'))
     current_dislikes_count = len(dislikes.objects.filter(
         video_id=video_id).distinct('user_id'))
-    print(current_likes_count)
-    print(current_dislikes_count)
+    
+    
 
     context = {
         'all_videos_data': all_videos_data,

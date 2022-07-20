@@ -169,14 +169,46 @@
                     <p>{{ video_data.description }}</p>
                     <hr>
                     <h4>0 Comments</h4>
-                    <div class="add-comment">
-                        <img src="{% static 'homepage/images/Jack.png' %}">
-                        <input type="text" placeholder="Add a comment...">
+                    <div>
+                        <div class="add-comment">
+                            <img src="{% static 'homepage/images/Jack.png' %}">
+                            <input id="comment-text" type="text" class="comment-input" placeholder="Add a comment...">
+                        </div>
+                        <div class="comment-btns toggler">
+                            <div>
+                                <button id="cancel-btn" class="comment-button">CANCEL</button>
+                                <input id="comment-btn" type="submit" class="comment-button" value="COMMENT">
+                            </div>
+                        </div>
+                        
+                        <script>
+                            $('#cancel-btn').click(function(){
+                                toggler.style.display = "none";
+                            });
+                            $('#comment-btn').click(function(){
+                                comment_text = $('#comment-text').val();
+                                $.ajax(
+                                    {
+                                        type: "GET",
+                                        url: "{% url 'main_comment' %}",
+                                        data:{
+                                            video_id: "{{ video_data.id }}",
+                                            comment_text: comment_text,
+                                        },
+                                        success: function(data) {
+                                            $("#comment-text").attr("placeholder", "Add a comment...").val("").focus().blur();
+                                            toggler.style.display = "none";
+                                        }
+                                    }
+                                )
+                            });
+                        </script>
+
                     </div>
                     <div class="old-comment">
                         <img src="{% static 'homepage/images/Jack.png' %}">
                         <div>
-                            <h3>Jack Nicholson <span>0 days ago</span></h3>
+                            <h3>Jack Nicholson<span>0 days ago</span></h3>
                             <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation
                                 they are feeling for this loss</p>
                             <div class="comment-action">
