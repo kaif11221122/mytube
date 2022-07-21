@@ -18,8 +18,8 @@ comment_field.onfocus = function () {
 
 function show_reply(v){
     document.querySelector('.comment-replies-'+v).style.display = "block";
-}
+};
 
 function cancel_reply(v){
     document.querySelector('.comment-replies-'+v).style.display = "none";
-}
+};

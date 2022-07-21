@@ -8,9 +8,6 @@ def homepage(request):
     videos_data = video_info.objects.all().values()
     if request.user.is_authenticated and not request.user.is_superuser:
         image = user_data.objects.filter(username_id=request.user.id)[0]
-        print('\n\n\n')
-        print(image)
-        print('\n\n\n')
         context = {
             'image': image,
             'videos_data': videos_data,

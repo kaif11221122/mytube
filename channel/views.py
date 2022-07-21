@@ -78,19 +78,49 @@ def main_comment(request):
 
     if request.method == "GET":
         user_data_obj = user_data.objects.get(id=request.user.id)
+        
+        print(request.GET)
         video_id = int(request.GET['video_id'])
         comment_text = request.GET['comment_text']
+        comments_count = int(request.GET['comments_count'])
         comments_obj = comments(
-            user_id = user_data_obj,
+            user_id=user_data_obj,
             video_id=video_info.objects.get(id=video_id),
             comment_text=comment_text,
-            parent_comment_id = None,
+            parent_comment_id=None,
         )
         comments_obj.save()
-        print('savedddddddddddddd')
-        queryset = comments.objects.filter(video_id=request.GET['video_id']).select_related('user_id')
+        queryset = comments.objects.filter(
+            video_id=request.GET['video_id'], parent_comment_id=None).select_related('user_id')
         video_comments = serializers.serialize('json', queryset)
-        data = {"video_comments" : video_comments}
+        data = {
+            "video_comments": video_comments,
+            "comments_count":comments_count+1,
+        }
+        return JsonResponse(data)
+
+
+def replied_comment(request):
+
+    if request.method == "GET":
+        parent_comment_id = request.GET['parent_comment_id']
+        parent_comment_obj = comments.objects.get(id=parent_comment_id)
+        replied_comment_text = request.GET['replied_comment_text']
+        video_id = int(request.GET['video_id'])
+
+        user_data_obj = user_data.objects.get(id=request.user.id)
+        comments_obj = comments(
+            user_id=user_data_obj,
+            video_id=video_info.objects.get(id=video_id),
+            comment_text=replied_comment_text,
+            parent_comment_id=parent_comment_obj,
+        )
+        comments_obj.save()
+        queryset = comments.objects.filter(
+            video_id=request.GET['video_id'], parent_comment_id=parent_comment_obj
+        ).select_related('user_id')
+        comment_replies = serializers.serialize('json', queryset)
+        data = {"comment_replies": comment_replies}
         return JsonResponse(data)
 
 

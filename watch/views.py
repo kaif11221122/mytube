@@ -9,22 +9,9 @@ from watch.models import likes, dislikes, comments
 
 def watch(request, id):
 
-    # video_comments = comments.objects.filter(
-    #     video_id=id).select_related('user_id')
-    # print(video_comments[0], type(video_comments[0]))
-    # print(getattr(video_comments[0], 'user_id'))
-    # print(request.user.id)
-
-    video_comments = comments.objects.filter(video_id=id).select_related('user_id')
-    # print('\n\n\n')
-    # for i in video_comments:
-    #     print(i)
-    # print('\n\n\n')
-    # print(getattr(video_comments[0], 'user_id'))
-
-    print('\n\n')
-    print(str(video_comments.query))
-
+    video_comments = comments.objects.filter(
+        video_id=id, parent_comment_id=None).select_related('user_id')
+    print(len(video_comments))
     all_videos_data = video_info.objects.all().exclude(id=id)
     video_data = video_info.objects.filter(id=id)
     video_data.update(video_views=F('video_views') + 1)
@@ -41,6 +28,7 @@ def watch(request, id):
         'likes_count': current_likes_count,
         'dislikes_count': current_dislikes_count,
         'video_comments': video_comments,
+        'comments_count': len(video_comments),
     }
     if request.user.is_authenticated and not request.user.is_superuser:
         image = user_data.objects.filter(username_id=request.user.id)[0]

@@ -168,8 +168,9 @@
                 <div class="vid-description">
                     <p>{{ video_data.description }}</p>
                     <hr>
-                    <h4>0 Comments</h4>
+                    <h4 id="comments_count">{{ comments_count }} Comments</h4>
                     <div>
+
                         <div class="add-comment">
                             <img src="{% static 'homepage/images/Jack.png' %}">
                             <input id="comment-text" type="text" class="comment-input" placeholder="Add a comment...">
@@ -180,33 +181,51 @@
                                 <input id="comment-btn" type="submit" class="comment-button" value="COMMENT">
                             </div>
                         </div>
-                        
+
                         <script>
-                            $('#cancel-btn').click(function(){
+                            $('#cancel-btn').click(function () {
                                 toggler.style.display = "none";
                             });
-                            $('#reply-cancel-btn').click(function(){
-                                document.querySelector('.comment-replies').style.display = "none";
-                            });
-                            $('#comment-btn').click(function(){
+                            $('#comment-btn').click(function () {
                                 comment_text = $('#comment-text').val();
                                 $.ajax(
                                     {
                                         type: "GET",
                                         url: "{% url 'main_comment' %}",
-                                        data:{
+                                        data: {
                                             video_id: "{{ video_data.id }}",
                                             comment_text: comment_text,
+                                            comments_count: {{ comments_count }},
                                         },
-                                        success: function(data) {
-                                            $("#comment-text").attr("placeholder", "Add a comment...").val("").focus().blur();
-                                            toggler.style.display = "none";
-                                            $('.all-loaded-comments').load(' .all-loaded-comments');
-                                            // $('.all-loaded-comments').load(' all-loaded-comments', {video_comments:data.video_comments});
+                                success: function (data) {
+                                    $("#comment-text").attr("placeholder", "Add a comment...").val("").focus().blur();
+                                    toggler.style.display = "none";
+                                    $('#comments_count').text(data.comments_count + ' Comments');
+                                    $('.all-loaded-comments').load(' .all-loaded-comments');
+                                    // $('.all-loaded-comments').load(' all-loaded-comments', {video_comments:data.video_comments});
+                                }
+                                    }
+                            )
+                            });
+                            function submit_comment_replyyy(v) {
+                                replied_comment_text = $("#reply-comment-text-" + v).val();
+                                $.ajax(
+                                    {
+                                        type: "GET",
+                                        url: "{% url 'replied_comment' %}",
+                                        data: {
+                                            parent_comment_id: v,
+                                            replied_comment_text: replied_comment_text,
+                                            video_id: "{{ video_data.id }}",
+                                        },
+                                        success: function (data){
+                                            cancel_reply(v);
+                                            console.log(data);
                                         }
                                     }
                                 )
-                            });
+                            };
+
                         </script>
 
                     </div>
@@ -214,7 +233,7 @@
                         {% for main_comment in video_comments %}
                         <div class="old-comment" id="old-comment">
                             <img src="{{ main_comment.user_id.profile_image.url }}">
-                            
+
                             <div class="main-comment-section">
                                 <h3>Hi<span>0 days ago</span></h3>
                                 <p>{{ main_comment.comment_text }}</p>
@@ -223,19 +242,25 @@
                                     <span>0</span>
                                     <img src="{% static 'homepage/images/dislike.png' %}">
                                     <span>0</span>
-                                    <p class="reply-{{ main_comment.id }}" onclick='show_reply("{{ main_comment.id }}")'><span>REPLY</span></p>
+                                    <p class="reply-{{ main_comment.id }}"
+                                        onclick='show_reply("{{ main_comment.id }}")'><span>REPLY</span></p>
                                     <a href="">View replies</a>
                                 </div>
                                 <div class="comment-replies-{{ main_comment.id }} comment-replies">
                                     <div>
                                         <div class="add-reply">
                                             <img id="add-reply_img" src="{% static 'homepage/images/Jack.png' %}">
-                                            <input id="reply-comment-text" type="text" class="reply-comment-input" placeholder="Add a reply...">
+                                            <input id="reply-comment-text-{{ main_comment.id }}" type="text"
+                                                class="reply-comment-input" placeholder="Add a reply...">
                                         </div>
                                         <div class="reply-comment-btns">
                                             <div>
-                                                <button id="reply-cancel-btn-{{ main_comment.id }}" class="reply-comment-button" onclick='cancel_reply("{{ main_comment.id }}")'>CANCEL</button>
-                                                <input id="reply-comment-btn" type="submit" class="reply-comment-button" value="REPLY">
+                                                <button id="reply-cancel-btn-{{ main_comment.id }}"
+                                                    class="reply-comment-button"
+                                                    onclick='cancel_reply("{{ main_comment.id }}")'>CANCEL</button>
+                                                <input id="reply-comment-btn-{{ main_comment.id }}" type="submit"
+                                                    class="reply-comment-button" value="REPLY"
+                                                    onclick='submit_comment_replyyy("{{ main_comment.id }}")'>
                                             </div>
                                         </div>
 
@@ -245,7 +270,7 @@
                         </div>
                         {% endfor %}
                     </div>
-                    
+
                 </div>
 
             </div>
