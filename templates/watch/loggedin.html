@@ -185,6 +185,9 @@
                             $('#cancel-btn').click(function(){
                                 toggler.style.display = "none";
                             });
+                            $('#reply-cancel-btn').click(function(){
+                                document.querySelector('.comment-replies').style.display = "none";
+                            });
                             $('#comment-btn').click(function(){
                                 comment_text = $('#comment-text').val();
                                 $.ajax(
@@ -198,6 +201,8 @@
                                         success: function(data) {
                                             $("#comment-text").attr("placeholder", "Add a comment...").val("").focus().blur();
                                             toggler.style.display = "none";
+                                            $('.all-loaded-comments').load(' .all-loaded-comments');
+                                            // $('.all-loaded-comments').load(' all-loaded-comments', {video_comments:data.video_comments});
                                         }
                                     }
                                 )
@@ -205,22 +210,42 @@
                         </script>
 
                     </div>
-                    <div class="old-comment">
-                        <img src="{% static 'homepage/images/Jack.png' %}">
-                        <div>
-                            <h3>Jack Nicholson<span>0 days ago</span></h3>
-                            <p>The way England board skipped Pant 5 boundaries in a over tells us how much humiliation
-                                they are feeling for this loss</p>
-                            <div class="comment-action">
-                                <img src="{% static 'homepage/images/like.png' %}">
-                                <span>0</span>
-                                <img src="{% static 'homepage/images/dislike.png' %}">
-                                <span>0</span>
-                                <span>REPLY</span>
-                                <a href="">View replies</a>
+                    <div class="all-loaded-comments">
+                        {% for main_comment in video_comments %}
+                        <div class="old-comment" id="old-comment">
+                            <img src="{{ main_comment.user_id.profile_image.url }}">
+                            
+                            <div class="main-comment-section">
+                                <h3>Hi<span>0 days ago</span></h3>
+                                <p>{{ main_comment.comment_text }}</p>
+                                <div class="comment-action">
+                                    <img src="{% static 'homepage/images/like.png' %}">
+                                    <span>0</span>
+                                    <img src="{% static 'homepage/images/dislike.png' %}">
+                                    <span>0</span>
+                                    <p class="reply-{{ main_comment.id }}" onclick='show_reply("{{ main_comment.id }}")'><span>REPLY</span></p>
+                                    <a href="">View replies</a>
+                                </div>
+                                <div class="comment-replies-{{ main_comment.id }} comment-replies">
+                                    <div>
+                                        <div class="add-reply">
+                                            <img id="add-reply_img" src="{% static 'homepage/images/Jack.png' %}">
+                                            <input id="reply-comment-text" type="text" class="reply-comment-input" placeholder="Add a reply...">
+                                        </div>
+                                        <div class="reply-comment-btns">
+                                            <div>
+                                                <button id="reply-cancel-btn-{{ main_comment.id }}" class="reply-comment-button" onclick='cancel_reply("{{ main_comment.id }}")'>CANCEL</button>
+                                                <input id="reply-comment-btn" type="submit" class="reply-comment-button" value="REPLY">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
+                    
                 </div>
 
             </div>

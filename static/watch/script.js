@@ -15,3 +15,11 @@ menu_icon.onclick = function () {
 comment_field.onfocus = function () {
     toggler.style.display = "flex";
 }
+
+function show_reply(v){
+    document.querySelector('.comment-replies-'+v).style.display = "block";
+}
+
+function cancel_reply(v){
+    document.querySelector('.comment-replies-'+v).style.display = "none";
+}

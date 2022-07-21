@@ -2,7 +2,10 @@ from django.shortcuts import redirect, render
 from .forms import video_creation_form
 from django.http import HttpResponse, JsonResponse
 from watch.models import likes, dislikes, comments
+from user_authentication.models import user_data
 from .models import video_info
+from django.core import serializers
+
 # Create your views here.
 
 
@@ -72,18 +75,23 @@ def dislike(request):
 
 
 def main_comment(request):
+
     if request.method == "GET":
+        user_data_obj = user_data.objects.get(id=request.user.id)
         video_id = int(request.GET['video_id'])
         comment_text = request.GET['comment_text']
         comments_obj = comments(
-            user_id = request.user,
+            user_id = user_data_obj,
             video_id=video_info.objects.get(id=video_id),
             comment_text=comment_text,
             parent_comment_id = None,
         )
         comments_obj.save()
-        print('comment saved')
-        return HttpResponse('Comment Saved')
+        print('savedddddddddddddd')
+        queryset = comments.objects.filter(video_id=request.GET['video_id']).select_related('user_id')
+        video_comments = serializers.serialize('json', queryset)
+        data = {"video_comments" : video_comments}
+        return JsonResponse(data)
 
 
 def test(request):

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from user_authentication.models import user_data
 from channel.models import video_info
 # Create your models here.
 
@@ -26,7 +27,7 @@ class dislikes(models.Model):
 class comments(models.Model):
 
     user_id = models.ForeignKey(
-        User, on_delete=models.CASCADE,
+        user_data, on_delete=models.CASCADE,
     )
     video_id = models.ForeignKey(
         video_info, on_delete=models.CASCADE,
