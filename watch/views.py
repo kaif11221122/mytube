@@ -11,6 +11,8 @@ def watch(request, id):
 
     video_comments = comments.objects.filter(
         video_id=id, parent_comment_id=None).select_related('user_id')
+    
+
     print(len(video_comments))
     all_videos_data = video_info.objects.all().exclude(id=id)
     video_data = video_info.objects.filter(id=id)

@@ -16,10 +16,12 @@ comment_field.onfocus = function () {
     toggler.style.display = "flex";
 }
 
-function show_reply(v){
-    document.querySelector('.comment-replies-'+v).style.display = "block";
+function show_reply(v) {
+    document.querySelector('.comment-replies-' + v).style.display = "block";
 };
 
-function cancel_reply(v){
-    document.querySelector('.comment-replies-'+v).style.display = "none";
+function cancel_reply(v) {
+    console.log('saved2');
+    document.querySelector('.comment-replies-' + v).style.display = "none";
+    console.log('saved3');
 };

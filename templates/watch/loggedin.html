@@ -13,6 +13,7 @@
 
 <body>
     <nav class="flex-div">
+
         <div class="nav-left flex-div">
             <img src="{% static 'homepage/images/menu.png' %}" class="menu-icon">
             <a href="{% url 'homepage' %}"><img src="{% static 'homepage/images/mytube-logo.jpg' %}" class="logo"></a>
@@ -73,7 +74,7 @@
         <div class="subscribed-list">
             <h3>SUBSCRIBED</h3>
             <a href=""><img src="{% static 'homepage/images/' %}">
-                <p>Testing Channel Name "{{ video_data.id }}"</p>
+                <p>Testing Channel Name"</p>
             </a>
         </div>
     </div>
@@ -108,48 +109,7 @@
                             <a id="dislike-count">{{ dislikes_count }}</a>
                         </button>
 
-                        <script>
-                            $('#like-btn').click(function () {
-                                var dislikes_count;
-                                likes_count = document.getElementById('like-count').innerText;
-                                dislikes_count = document.getElementById('dislike-count').innerText;
-                                $.ajax(
-                                    {
-                                        type: "GET",
-                                        url: "{% url 'like' %}",
-                                        data: {
-                                            likes_count: likes_count,
-                                            dislikes_count: dislikes_count,
-                                            video_id: "{{ video_data.id }}",
-                                        },
-                                        success: function (data) {
-                                            document.getElementById('like-count').innerText = data.likes_count;
-                                            document.getElementById('dislike-count').innerText = data.dislikes_count;
-                                        }
-                                    }
-                                )
-                            });
-                            $('#dislike-btn').click(function () {
-                                var dislikes_count;
-                                likes_count = document.getElementById('like-count').innerText;
-                                dislikes_count = document.getElementById('dislike-count').innerText;
-                                $.ajax(
-                                    {
-                                        type: "GET",
-                                        url: "{% url 'dislike' %}",
-                                        data: {
-                                            likes_count: likes_count,
-                                            dislikes_count: dislikes_count,
-                                            video_id: "{{ video_data.id }}",
-                                        },
-                                        success: function (data) {
-                                            document.getElementById('like-count').innerText = data.likes_count;
-                                            document.getElementById('dislike-count').innerText = data.dislikes_count;
-                                        }
-                                    }
-                                )
-                            });
-                        </script>
+
 
 
                         <a href=""><img src="{% static 'homepage/images/share.png' %}" alt="">Share</a>
@@ -158,7 +118,7 @@
                 </div>
                 <hr>
                 <div class="publisher">
-                    <img src="{% static 'homepage/images/Jack.png' %}"">
+                    <img src="{% static 'homepage/images/Jack.png' %}">
                     <div>
                         <p>Pending Channel</p>
                         <span>0 Subscribers</span>
@@ -181,53 +141,6 @@
                                 <input id="comment-btn" type="submit" class="comment-button" value="COMMENT">
                             </div>
                         </div>
-
-                        <script>
-                            $('#cancel-btn').click(function () {
-                                toggler.style.display = "none";
-                            });
-                            $('#comment-btn').click(function () {
-                                comment_text = $('#comment-text').val();
-                                $.ajax(
-                                    {
-                                        type: "GET",
-                                        url: "{% url 'main_comment' %}",
-                                        data: {
-                                            video_id: "{{ video_data.id }}",
-                                            comment_text: comment_text,
-                                            comments_count: {{ comments_count }},
-                                        },
-                                success: function (data) {
-                                    $("#comment-text").attr("placeholder", "Add a comment...").val("").focus().blur();
-                                    toggler.style.display = "none";
-                                    $('#comments_count').text(data.comments_count + ' Comments');
-                                    $('.all-loaded-comments').load(' .all-loaded-comments');
-                                    // $('.all-loaded-comments').load(' all-loaded-comments', {video_comments:data.video_comments});
-                                }
-                                    }
-                            )
-                            });
-                            function submit_comment_replyyy(v) {
-                                replied_comment_text = $("#reply-comment-text-" + v).val();
-                                $.ajax(
-                                    {
-                                        type: "GET",
-                                        url: "{% url 'replied_comment' %}",
-                                        data: {
-                                            parent_comment_id: v,
-                                            replied_comment_text: replied_comment_text,
-                                            video_id: "{{ video_data.id }}",
-                                        },
-                                        success: function (data){
-                                            cancel_reply(v);
-                                            console.log(data);
-                                        }
-                                    }
-                                )
-                            };
-
-                        </script>
-
                     </div>
                     <div class="all-loaded-comments">
                         {% for main_comment in video_comments %}
@@ -244,7 +157,9 @@
                                     <span>0</span>
                                     <p class="reply-{{ main_comment.id }}"
                                         onclick='show_reply("{{ main_comment.id }}")'><span>REPLY</span></p>
-                                    <a href="">View replies</a>
+                                    <a id="view-replies-{{ main_comment.id }}"
+                                        onclick='view_old_replies("{{ main_comment.id }}")'>View replies</a>
+                                    <!-- *********************** -->
                                 </div>
                                 <div class="comment-replies-{{ main_comment.id }} comment-replies">
                                     <div>
@@ -260,12 +175,18 @@
                                                     onclick='cancel_reply("{{ main_comment.id }}")'>CANCEL</button>
                                                 <input id="reply-comment-btn-{{ main_comment.id }}" type="submit"
                                                     class="reply-comment-button" value="REPLY"
-                                                    onclick='submit_comment_replyyy("{{ main_comment.id }}")'>
+                                                    onclick='submit_comment_reply("{{ main_comment.id }}")'>
                                             </div>
                                         </div>
 
+                                        <div id="all-old-comment-replies-{{ main_comment.id }}">
+
+                                        </div>
+
+
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         {% endfor %}
@@ -291,6 +212,148 @@
     </div>
 
     <script src="{% static 'watch/script.js' %}"></script>
+
+    <script>
+        $('#cancel-btn').click(function () {
+            toggler.style.display = "none";
+        });
+        $('#comment-btn').click(function () {
+            comment_text = $('#comment-text').val();
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'main_comment' %}",
+                    data: {
+                        video_id: "{{ video_data.id }}",
+                        comment_text: comment_text,
+                        comments_count: {{ comments_count }},
+                                        },
+            success: function (data) {
+
+                $("#comment-text").attr("placeholder", "Add a comment...").val("").focus().blur();
+                toggler.style.display = "none";
+                $('#comments_count').text(data.comments_count + ' Comments');
+                $('.all-loaded-comments').load(' .all-loaded-comments');
+                // $('.all-loaded-comments').load(' all-loaded-comments', {video_comments:data.video_comments});
+            }
+                                    }
+        )
+                            });
+        function submit_comment_reply(v) {
+            replied_comment_text = $("#reply-comment-text-" + v).val();
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'replied_comment' %}",
+                    data: {
+                        parent_comment_id: v,
+                        replied_comment_text: replied_comment_text,
+                        video_id: "{{ video_data.id }}",
+                    },
+                    success: function (data) {
+                        console.log('111111111111111111111')
+                        console.log('reply-comment-text-' + v)
+
+                        document.getElementById('reply-comment-text-' + v).style.placeholder = "Add a reply88877...";
+                        cancel_reply(v);
+                    }
+                }
+            )
+        };
+        /* //////////////////////////////////////////// */
+        function view_old_replies(v) {
+            var check_replies = document.getElementById('check_replies');
+            console.log(typeof v);
+            console.log(v);
+            if (check_replies != null) {
+                document.getElementById('all-old-comment-replies-' + v).innerHTML = '';
+            }
+            else {
+                console.log('imhere2');
+                document.getElementById('all-old-comment-replies-' + v).style.display = 'inline';
+                document.querySelector('.comment-replies-' + v).style.display = "inline";
+                console.log('imhere3333');
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "{% url 'view_old_replies' %}",
+                        data: {
+                            parent_comment_id: v,
+                            video_id: "{{ video_data.id }}",
+                        },
+                        success: function (data) {
+                            for (var i in data.comments_replies_for_parent) {
+                                var reply_content = data.comments_replies_for_parent[i];
+                                $("#all-old-comment-replies-" + v).append(
+
+                                    '<div class="old-comment-replies-' + reply_content['id'] + '">' +
+                                    '<img src=' + reply_content['profile_image'] + '>' +
+
+                                    '<div class="main-comment-section-' + reply_content['id'] + '">' +
+                                    '<h3>' + reply_content['username'] + '<span>0 days ago</span></h3>' +
+                                    '<p>' + reply_content['comment_text'] + '</p>' +
+                                    '<div class="comment-action" id="check_replies">' +
+                                    '<img src="{% static "homepage/images/like.png" %}">' +
+                                    '<span>0</span>' +
+                                    '<img src="{% static "homepage/images/dislike.png" %}">' +
+                                    '<span>0</span>' +
+                                    '<p class=""><span>REPLY</span>' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            }
+                        }
+                    }
+                )
+            }
+        };
+
+    </script>
+
+    <script>
+        $('#like-btn').click(function () {
+            var dislikes_count;
+            likes_count = document.getElementById('like-count').innerText;
+            dislikes_count = document.getElementById('dislike-count').innerText;
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'like' %}",
+                    data: {
+                        likes_count: likes_count,
+                        dislikes_count: dislikes_count,
+                        video_id: "{{ video_data.id }}",
+                    },
+                    success: function (data) {
+                        document.getElementById('like-count').innerText = data.likes_count;
+                        document.getElementById('dislike-count').innerText = data.dislikes_count;
+                    }
+                }
+            )
+        });
+        $('#dislike-btn').click(function () {
+            var dislikes_count;
+            likes_count = document.getElementById('like-count').innerText;
+            dislikes_count = document.getElementById('dislike-count').innerText;
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "{% url 'dislike' %}",
+                    data: {
+                        likes_count: likes_count,
+                        dislikes_count: dislikes_count,
+                        video_id: "{{ video_data.id }}",
+                    },
+                    success: function (data) {
+                        document.getElementById('like-count').innerText = data.likes_count;
+                        document.getElementById('dislike-count').innerText = data.dislikes_count;
+                    }
+                }
+            )
+        });
+    </script>
 
 </body>
 

@@ -78,8 +78,7 @@ def main_comment(request):
 
     if request.method == "GET":
         user_data_obj = user_data.objects.get(id=request.user.id)
-        
-        print(request.GET)
+
         video_id = int(request.GET['video_id'])
         comment_text = request.GET['comment_text']
         comments_count = int(request.GET['comments_count'])
@@ -95,7 +94,7 @@ def main_comment(request):
         video_comments = serializers.serialize('json', queryset)
         data = {
             "video_comments": video_comments,
-            "comments_count":comments_count+1,
+            "comments_count": comments_count+1,
         }
         return JsonResponse(data)
 
@@ -122,6 +121,31 @@ def replied_comment(request):
         comment_replies = serializers.serialize('json', queryset)
         data = {"comment_replies": comment_replies}
         return JsonResponse(data)
+
+
+def view_old_replies(request):
+    if request.method == "GET":
+        print('okkkkk')
+        parent_comment_id = request.GET['parent_comment_id']
+        parent_comment_obj = comments.objects.get(id=parent_comment_id)
+        queryset = comments.objects.filter(
+            parent_comment_id=parent_comment_obj).select_related('user_id')
+        print(str(queryset.query))
+        print('\n\n\nok')
+        comments_replies_for_parent = []
+        for obj in queryset:
+            obj_dict = obj.__dict__
+            obj_dict['username'] = str(obj.user_id.username)
+            obj_dict['profile_image'] = obj.user_id.profile_image.url
+            del obj_dict['_state']
+            comments_replies_for_parent.append(obj_dict)
+            print(obj_dict, '\n\n')
+        data = {
+            "comments_replies_for_parent": comments_replies_for_parent,
+        }
+        return JsonResponse(data)
+
+# def subscribe_channel()
 
 
 def test(request):
